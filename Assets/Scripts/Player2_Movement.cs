@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class Player2_Movement : MonoBehaviour {
-
+    public Transform leader;
+    public float followDistance;
 	// Use this for initialization
 	void Start () {
 		
@@ -11,10 +12,11 @@ public class Player2_Movement : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		var x = Input.GetAxis("Horizontal") * Time.deltaTime * 150.0f;
-		var z = Input.GetAxis("Vertical") * Time.deltaTime * 3.0f;
-
-		transform.Rotate(0, x, 0);
-		transform.Translate(0, 0, z);
+        var heading = leader.GetComponent<Transform>().position - transform.position;
+        heading.y = 0;
+        var distance = heading.magnitude;
+        var direction = heading / distance;
+        transform.position = leader.position - followDistance * direction;
+        transform.eulerAngles = direction;
 	}
 }
