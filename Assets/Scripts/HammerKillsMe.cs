@@ -21,7 +21,11 @@ public class HammerKillsMe : MonoBehaviour {
 		if (other.gameObject.name == "Hammer") {
 			Destroy(gameObject);
 			if (thingToTrigger) {
-				thingToTrigger.SetActive (false);
+				if (thingToTrigger.active == true) {
+					thingToTrigger.SetActive (false);
+				} else {
+					thingToTrigger.SetActive (true);
+				}
 			}
 //			if (SoundFX) {
 //				SoundFX.Play ();
