@@ -1,25 +1,39 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 
 public class Follower : MonoBehaviour {
-    ArrayList followers;
+    public ArrayList followers;
     public GameObject[] followableObjects;
-    public float followDistance, grabDistance;
+    public float followDistance, topSpeed;
+    public GameObject me;
     // Use this for initialization
 	void Start () {
+        Debug.Log(me);
 		followers = new ArrayList();
 	}
 	
 	// Update is called once per frame
-	void Update () {
-        for( int i = 0 ; i < followers.Count-1 ; i++ ){
-            Follow((GameObject)followers[i], (GameObject)followers[i - 1]);
+	void FixedUpdate () {
+        if (followers.Count > 0) {
+            Follow( me, (GameObject) followers[0] );
+            for (int i = 0; i < followers.Count - 1; i++) {
+                Follow((GameObject)followers[i], (GameObject)followers[i + 1]);
+            }
         }
-        if (Input.GetKeyDown("Fire")) {
+        /**
+        if (Input.GetAxis("Fire1") > 0) {
+            Debug.Log(FindClosest());
             AddFollower( FindClosest() );
         }
+         */
 	}
+
+    void OnTriggerEnter(Collider coll) {
+        Debug.Log(coll.gameObject);
+        AddFollower( coll.gameObject );
+    }
 
     GameObject FindClosest() {
         if (followableObjects.Length > 0)
@@ -34,7 +48,7 @@ public class Follower : MonoBehaviour {
                     min = go;
                 }
             }
-            return ( minDist < grabDistance ) ? min : null;
+            return minDist < 2 ? min : null;
         }
         else
         {
@@ -45,19 +59,28 @@ public class Follower : MonoBehaviour {
     void Follow(GameObject leader, GameObject follower){
         var leadPos = leader.GetComponent<Transform>().position;
         Transform followTransform = follower.GetComponent<Transform>();
-        var heading = leadPos - followTransform.position;
-        heading.y = 0;
-        var distance = heading.magnitude;
-        var direction = heading / distance;
-        followTransform.position = leadPos - followDistance * direction;
         followTransform.LookAt(leadPos);
+        var distanceAway = Vector3.Distance(leadPos, followTransform.position) - followDistance;
+        var speed = Mathf.Min( topSpeed, distanceAway );
+        followTransform.Translate(Vector3.forward * speed * Time.deltaTime);
     }
 
-    void AddFollower( GameObject follower ){
-        if (follower is GameObject && !followers.Contains(follower)) {
-            followers.Add(follower);
-        } else {
-            Debug.Log("Can't add {0}", follower);
+    public void AddFollower( GameObject follower ){
+        Debug.Log(follower);
+        for (int i = 0; i < followableObjects.Length; i++)
+        {
+            if ( follower == followableObjects[i] )
+            {
+                if (follower is GameObject && !followers.Contains(follower))
+                {
+                    followers.Add(follower);
+                }
+                else
+                {
+                    Debug.Log("Can't add ", follower);
+                }
+            }
         }
+        Debug.Log("Can't add ", follower);
     }
 }
