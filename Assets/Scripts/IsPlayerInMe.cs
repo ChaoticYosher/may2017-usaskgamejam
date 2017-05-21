@@ -7,6 +7,14 @@ public class IsPlayerInMe : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		
+		//disable render for all but Room5
+		if(transform.name != "Room5")
+		{
+			foreach (Transform child in transform) {
+				child.gameObject.SetActive (false);
+			}
+		}
+
 	}
 	
 	// Update is called once per frame
@@ -18,8 +26,7 @@ public class IsPlayerInMe : MonoBehaviour {
 		if (other.gameObject.tag == "Player") {
 			//for each child, enable render
 			foreach (Transform child in transform) {
-				if (child.GetComponent<Renderer> ())
-				child.GetComponent<Renderer> ().enabled = true;
+				child.gameObject.SetActive (true);
 			}
 		}
 	}
@@ -29,8 +36,7 @@ public class IsPlayerInMe : MonoBehaviour {
 		if (other.gameObject.tag == "Player") {
 			//for each child, disable render
 			foreach (Transform child in transform) {
-				if (child.GetComponent<Renderer> ())
-				child.GetComponent<Renderer> ().enabled = false;
+				child.gameObject.SetActive (false);
 			}
 		}
 	}
