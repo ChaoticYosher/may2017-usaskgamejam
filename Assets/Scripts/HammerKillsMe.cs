@@ -5,13 +5,12 @@ using UnityEngine;
 public class HammerKillsMe : MonoBehaviour {
 
 	public GameObject thingToTrigger;
-	public AudioClip SoundFX;
-    public AudioSource audioSource;
+    private AudioSource audioSource;
+	private bool destoyed = false;
 
 	// Use this for initialization
 	void Start () {
         audioSource = GetComponent<AudioSource>();
-        audioSource.clip = SoundFX;
 	}
 	
 	// Update is called once per frame
@@ -20,8 +19,15 @@ public class HammerKillsMe : MonoBehaviour {
 	}
 
 	void OnTriggerEnter(Collider other) {
-		if (other.gameObject.name == "Hammer") {
-			Destroy(gameObject);
+
+		if (other.gameObject.name == "Hammer" && destoyed == false) {
+
+			if (audioSource.clip) {
+				audioSource.Play ();
+			}
+
+			Invoke ("destroyMe", audioSource.clip.length);
+
 			if (thingToTrigger) {
 				if (thingToTrigger.active == true) {
 					thingToTrigger.SetActive (false);
@@ -29,10 +35,14 @@ public class HammerKillsMe : MonoBehaviour {
 					thingToTrigger.SetActive (true);
 				}
 			}
-			if (SoundFX) {
-				audioSource.Play ();
-			}
+
+			destoyed = true;
 		}
+	}
+
+	void destroyMe()
+	{
+		Destroy(gameObject);
 	}
 
 }
