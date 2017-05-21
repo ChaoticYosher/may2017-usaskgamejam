@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class PlayerJump : MonoBehaviour {
 
-	public int jumpForce = 10;
-	private bool canJump;
+	public int jumpForce = 1;
+	private bool canJump, wantToJump;
 	private Rigidbody selfRigidBody;
 
 	// Use this for initialization
@@ -15,17 +15,27 @@ public class PlayerJump : MonoBehaviour {
 	
 	// Update is called once per frame
 	void FixedUpdate () {
-		if (canJump) {
+		if (canJump && wantToJump) {
 			canJump = false;
+			wantToJump = false;
 			selfRigidBody.AddForce (0, jumpForce, 0, ForceMode.Impulse);
 		}
 	}
 
 	void Update()
 	{
-		if (Input.GetKeyUp ("space")) {
-			canJump = true;
+		if (Input.GetKeyUp ("space") && canJump) {
+			wantToJump = true;
 		}
 
+	}
+
+	void OnTriggerEnter(Collider other) {
+		if (other.gameObject.layer == 8) {
+			//Debug.Log("Boop" + GetComponent<Renderer>().material);
+			canJump = true;
+		} else {
+			canJump = false;
+		}
 	}
 }
