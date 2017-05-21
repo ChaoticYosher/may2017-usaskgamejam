@@ -6,10 +6,12 @@ public class HammerKillsMe : MonoBehaviour {
 
 	public GameObject thingToTrigger;
 	public AudioClip SoundFX;
+    public AudioSource audioSource;
 
 	// Use this for initialization
 	void Start () {
-		
+        audioSource = GetComponent<AudioSource>();
+        audioSource.clip = SoundFX;
 	}
 	
 	// Update is called once per frame
@@ -27,9 +29,9 @@ public class HammerKillsMe : MonoBehaviour {
 					thingToTrigger.SetActive (true);
 				}
 			}
-//			if (SoundFX) {
-//				SoundFX.Play ();
-//			}
+			if (SoundFX) {
+				audioSource.Play ();
+			}
 		}
 	}
 
