@@ -17,6 +17,6 @@ public class Player2_Movement : MonoBehaviour {
         var distance = heading.magnitude;
         var direction = heading / distance;
         transform.position = leader.position - followDistance * direction;
-        transform.eulerAngles = direction;
+        transform.LookAt( leader );
 	}
 }
