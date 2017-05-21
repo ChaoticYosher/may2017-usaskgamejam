@@ -20,7 +20,7 @@ public class CameraXRAY : MonoBehaviour {
 			RaycastHit hit = hits [i];
 			if (hit.transform.gameObject.tag == "XRay") {
 
-				Debug.Log ("XRay" + hit.transform.name);
+				//Debug.Log ("XRay" + hit.transform.name);
 
 				Renderer rend = hit.transform.GetComponent<Renderer> ();
 
@@ -47,7 +47,7 @@ public class CameraXRAY : MonoBehaviour {
 			RaycastHit hit = hitsBack [i];
 			if (hit.transform.gameObject.tag == "XRay") {
 
-				Debug.Log ("XRay" + hit.transform.name);
+				//Debug.Log ("XRay" + hit.transform.name);
 
 				Renderer rend = hit.transform.GetComponent<Renderer> ();
 

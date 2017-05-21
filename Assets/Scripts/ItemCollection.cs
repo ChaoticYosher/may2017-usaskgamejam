@@ -16,18 +16,18 @@ public class ItemCollection : MonoBehaviour {
 
 	void OnCollisionEnter(Collision col){
 
-		Debug.Log (col.gameObject.name);
+		//Debug.Log (col.gameObject.name);
 
 		if (col.gameObject.name == "HammerCollect") {
 			//turn on hammer script
-			Debug.Log("HammeR");
+			//Debug.Log("HammeR");
 			GetComponent<TheHammer>().enabled = true;
 			Destroy (col.gameObject);
 		}
 
 		if (col.gameObject.name == "SpringCollect") {
 			//turn on hammer script
-			Debug.Log("Spring");
+			//Debug.Log("Spring");
 			GetComponent<PlayerJump>().enabled = true;
 			Destroy (col.gameObject);
 		}
