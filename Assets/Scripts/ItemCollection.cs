@@ -24,5 +24,12 @@ public class ItemCollection : MonoBehaviour {
 			GetComponent<TheHammer>().enabled = true;
 			Destroy (col.gameObject);
 		}
+
+		if (col.gameObject.name == "SpringCollect") {
+			//turn on hammer script
+			Debug.Log("Spring");
+			GetComponent<PlayerJump>().enabled = true;
+			Destroy (col.gameObject);
+		}
 	}
 }
