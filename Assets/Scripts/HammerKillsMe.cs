@@ -5,6 +5,7 @@ using UnityEngine;
 public class HammerKillsMe : MonoBehaviour {
 
 	public GameObject thingToTrigger;
+	public AudioClip SoundFX;
 
 	// Use this for initialization
 	void Start () {
@@ -19,7 +20,12 @@ public class HammerKillsMe : MonoBehaviour {
 	void OnTriggerEnter(Collider other) {
 		if (other.gameObject.name == "Hammer") {
 			Destroy(gameObject);
-			thingToTrigger.SetActive (false);
+			if (thingToTrigger) {
+				thingToTrigger.SetActive (false);
+			}
+//			if (SoundFX) {
+//				SoundFX.Play ();
+//			}
 		}
 	}
 
