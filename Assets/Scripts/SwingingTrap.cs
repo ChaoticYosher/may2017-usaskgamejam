@@ -6,6 +6,7 @@ public class SwingingTrap : MonoBehaviour {
 
 	int direction = 1;
 	Vector3 rotatePoint;
+	public bool sideOrForward = true;
 	public int rotateSpeed = 20;
 
 	// Use this for initialization
@@ -16,17 +17,29 @@ public class SwingingTrap : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 
-		//Debug.Log (transform.rotation.x);
+		if (sideOrForward == true) {
+			//Debug.Log (transform.rotation.x);
 
-		if (transform.rotation.x > 0.5) {
-			direction = -1;
-		} 
-		else if (transform.rotation.x < -0.5)
-		{
-			direction = 1;
+			if (transform.rotation.x > 0.5) {
+				direction = -1;
+			} else if (transform.rotation.x < -0.5) {
+				direction = 1;
+			}
+
+			transform.RotateAround (rotatePoint, Vector3.right, direction * rotateSpeed * Time.deltaTime);
 		}
 
-		transform.RotateAround (rotatePoint, Vector3.right, direction * rotateSpeed * Time.deltaTime);
+		if (sideOrForward == false) {
+			//Debug.Log (transform.rotation.x);
+
+			if (transform.rotation.z > 0.5) {
+				direction = -1;
+			} else if (transform.rotation.z < -0.5) {
+				direction = 1;
+			}
+
+			transform.RotateAround (rotatePoint, Vector3.forward, direction * rotateSpeed * Time.deltaTime);
+		}
 
 	}
 }

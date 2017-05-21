@@ -38,4 +38,10 @@ public class PlayerJump : MonoBehaviour {
 			canJump = false;
 		}
 	}
+
+	void OnCollisionEnter(Collision coll)
+	{
+		if(coll.gameObject.layer != 8)
+		canJump = false;
+	}
 }

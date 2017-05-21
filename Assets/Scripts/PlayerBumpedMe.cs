@@ -6,6 +6,8 @@ public class PlayerBumpedMe : MonoBehaviour {
 
 	Material iron;
 	Material slime;
+	public GameObject thingToAffect;
+	bool thingActive = false;
 
 	// Use this for initialization
 	void Start () {
@@ -22,9 +24,16 @@ public class PlayerBumpedMe : MonoBehaviour {
 	}
 
 	void OnCollisionEnter(Collision col){
-		if(col.gameObject.tag == "Player"){
+		if(col.gameObject.tag == "Player" && thingActive==false){
 			Debug.Log("Boop" + GetComponent<Renderer>().material);
 			GetComponent<Renderer> ().material = slime;
+			thingToAffect.SetActive (true);
+			thingActive = true;
+		}else if(col.gameObject.tag == "Player" && thingActive==true){
+			Debug.Log("Boop" + GetComponent<Renderer>().material);
+			GetComponent<Renderer> ().material = iron;
+			thingToAffect.SetActive (false);
+			thingActive = false;
 		}
 
 	}
