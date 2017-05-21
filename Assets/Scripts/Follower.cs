@@ -10,7 +10,6 @@ public class Follower : MonoBehaviour {
     public GameObject me;
     // Use this for initialization
 	void Start () {
-        Debug.Log(me);
 		followers = new ArrayList();
 	}
 	
@@ -31,7 +30,6 @@ public class Follower : MonoBehaviour {
 	}
 
     void OnTriggerEnter(Collider coll) {
-        Debug.Log(coll.gameObject);
         AddFollower( coll.gameObject );
     }
 
@@ -66,7 +64,6 @@ public class Follower : MonoBehaviour {
     }
 
     public void AddFollower( GameObject follower ){
-        Debug.Log(follower);
         for (int i = 0; i < followableObjects.Length; i++)
         {
             if ( follower == followableObjects[i] )
@@ -75,12 +72,7 @@ public class Follower : MonoBehaviour {
                 {
                     followers.Add(follower);
                 }
-                else
-                {
-                    Debug.Log("Can't add ", follower);
-                }
             }
         }
-        Debug.Log("Can't add ", follower);
     }
 }
